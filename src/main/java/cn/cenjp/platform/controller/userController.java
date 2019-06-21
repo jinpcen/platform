@@ -117,9 +117,6 @@ public class userController {
         PageHelper.startPage(pageIndex, 4);
         List<GoodVo> goodVoList = goodService.getGoodVoList(goodKind);
         PageInfo<GoodVo> pageInfo = new PageInfo<>(goodVoList);
-        for (GoodVo goodVo: goodVoList){
-            System.out.println(goodVo.toString());
-        }
 
         List<GoodVo> list = pageInfo.getList();
         model.addAttribute("navigatepageNums", pageInfo.getNavigatepageNums());
