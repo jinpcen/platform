@@ -1,0 +1,113 @@
+﻿<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/font.css}">
+	<link rel="stylesheet" th:href="@{/css/xadmin.css}">
+    <link rel="stylesheet" th:href="@{/css/swiper.min.css}">
+    <script type="text/javascript" th:src="@{/js/jQuery.js}"></script>
+    <script type="text/javascript" th:src="@{/js/swiper.jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/layui/layui.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/js/xadmin.js}"></script>
+</head>
+<body>
+<div th:replace="admin/adminHeader::Header"></div>
+    <!-- 顶部结束 -->
+
+    <!-- 中部开始 -->
+    <div class="wrapper">
+        <!-- 左侧菜单开始 -->
+       <div th:replace="admin/adminLeft::left"></div>
+        <!-- 左侧菜单结束 -->
+        <!-- 右侧主体开始 -->
+        <div class="page-content">
+          <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <fieldset class="layui-elem-field layui-field-title site-title">
+              <legend><a name="default">信息统计</a></legend>
+            </fieldset>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>统计</th>
+                        <th>发布商品数</th>
+                        <th>秒杀订单数</th>
+                        <th>订单流水额</th>
+                        <th>用户活跃数</th>
+                        <th>新增用户数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>今日</td>
+                        <td th:text="${today.sendGood}">0</td>
+                        <td th:text="${today.spikeCount}">0</td>
+                        <td th:text="${today.turnOver}">0</td>
+                        <td th:text="${today.dayUser}">0</td>
+                        <td th:text="${today.incUser}">0</td>
+                    </tr>
+                    <tr>
+                        <td>昨日</td>
+                        <td th:text="${lastDay.sendGood}">0</td>
+                        <td th:text="${lastDay.spikeCount}">0</td>
+                        <td th:text="${lastDay.turnOver}">0</td>
+                        <td th:text="${lastDay.dayUser}">0</td>
+                        <td th:text="${lastDay.incUser}">0</td>
+                    </tr>
+                    <tr>
+                        <td>本周</td>
+                        <td th:text="${thisWeek.sendGood}">0</td>
+                        <td th:text="${thisWeek.spikeCount}">0</td>
+                        <td th:text="${thisWeek.turnOver}">0</td>
+                        <td th:text="${thisWeek.dayUser}">0</td>
+                        <td th:text="${thisWeek.incUser}">0</td>
+                    </tr>
+                    <tr>
+                        <td>本月</td>
+                        <td th:text="${thisMonth.sendGood}">0</td>
+                        <td th:text="${thisMonth.spikeCount}">0</td>
+                        <td th:text="${thisMonth.turnOver}">0</td>
+                        <td th:text="${thisMonth.dayUser}">0</td>
+                        <td th:text="${thisMonth.incUser}">0</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 右侧内容框架，更改从这里结束 -->
+          </div>
+        </div>
+        <!-- 右侧主体结束 -->
+    </div>
+    <!-- 中部结束 -->
+
+    <!-- 背景切换开始 -->
+	<div class="bg-changer">
+        <div class="swiper-container changer-list">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img class="item" src="images/a.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/b.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/c.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/d.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/e.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/f.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/g.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/h.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/i.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/j.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/k.jpg" alt=""></div>
+                <div class="swiper-slide"><span class="reset">初始化</span></div>
+            </div>
+        </div>
+        <div class="bg-out"></div>
+        <div id="changer-set"><i class="iconfont">&#xe696;</i></div>   
+    </div>
+    <!-- 背景切换结束 -->
+     
+</body>
+<script>
+    function level_see (title,url,id,w,h) {
+        x_admin_show(title,url,w,h);
+    }
+</script>
+</html>

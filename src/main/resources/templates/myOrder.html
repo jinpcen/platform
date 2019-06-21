@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="../bootstrap-3.3.4/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../Flat-UI-master/dist/css/flat-ui.min.css"/>
+    <script src="../Flat-UI-master/dist/js/vendor/jquery.min.js"></script>
+    <script src="../bootstrap-3.3.4/dist/js/bootstrap.min.js"></script>
+    <script src="../Flat-UI-master/dist/js/flat-ui.min.js"></script>
+    <title></title>
+    <style>
+        .row{
+            margin-left: 20px;
+            margin-right: 20px;;
+        }
+        .line-center{
+            line-height:50px;
+            text-align: center;
+        }
+        .row input{
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="Navbar::headerDiv"></div>
+<!--content-->
+<div class="container">
+    <div class="row thumbnail center">
+        <div class="col-sm-12">
+            <h1 class="text-center" style="margin-bottom: 30px">我的秒杀</h1>
+        </div>
+        <div class=" list-group">
+
+            <div class="col-sm-12 thumbnail">
+                <div class="col-sm-offset-1 col-sm-2 line-center">商品名</div>
+                <div class="col-sm-2 line-center">原价</div>
+                <div class="col-sm-2 line-center">秒杀价格</div>
+                <div class="col-sm-4 line-center">秒杀时间</div>
+              
+            </div>
+            <div class="col-sm-12  list-group-item" th:each="order:${orders}">
+                <div class="col-sm-offset-1 col-sm-2 line-center" th:text="${order.goodName}">商品</div>
+                <div class="col-sm-2 line-center" th:text="${order.goodOiginalPrice}">秒杀价格</div>
+                <div class="col-sm-2 line-center" th:text="${order.spikePrice}">1</div>
+                <div class="col-sm-4 line-center" th:text="${order.spikeDate}">小计</div>
+            </div>
+       
+        </div>
+        <div class="col-sm-offset-8 col-sm-3" style="padding: 30px;">
+            <p><a class="btn btn-primary" role="button"  href="/getList/1/1">继续购物</a></p>
+        </div>
+    </div>
+</div>
+
+<!--footer-->
+<div class="navbar navbar-default navbar-fixed-bottom">
+        <div class="col-sm-offset-5 col-sm-5">
+            解释权归<a href="www.cenjp.cn">www.cenjp.cn</a>所有<br>
+        </div>
+        <div class="col-sm-offset-5 col-sm-5">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://www.miitbeian.gov.cn">许可证:KVW867</a>
+        </div>
+</div>
+</body>
+</html>

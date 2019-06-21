@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.4/dist/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/Flat-UI-master/dist/css/flat-ui.min.css}"/>
+    <script type="text/javascript" th:src="@{/bootstrap-3.3.4/dist/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/Flat-UI-master/dist/js/flat-ui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/Flat-UI-master/dist/js/vendor/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.cookie.js}"></script>
+    <title></title>
+    <style>
+        .row{
+            margin-left: 20px;
+            margin-right: 20px;;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">这什么东西</span>
+            </button>
+            <a class="navbar-brand" href="#">商品秒杀平台</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right hidden-sm">
+                <li><a href="#">登录</a></li>
+                <li><a href="/Register">注册</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<!--content-->
+<div class="container">
+    <div class="row  center">
+        <div class="col-sm-12">
+            <h1 class="text-center" style="margin-bottom: 30px">用户登录</h1>
+        </div>
+        <div class="col-sm-offset-4 col-sm-4">
+            <form class="form-signin"  id="loginForm" method="post" action="/handerLogin">
+                <p>
+                    <label for="username" class="sr-only">手机号码</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="手机号码" required autofocus>
+                </p>
+                <p>
+                    <label for="password" class="sr-only">密码</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="密码" required>
+                </p>
+                <p>
+                    <label for="imageCode" class="sr-only">请输入验证码</label>
+                    <img src="/getImage"><input type="text" id="imageCode" class="form-control" placeholder="验证码">
+                </p>
+                <p><input type='checkbox' name='remember-me' checked="checked"/>记住我</p>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="check()">登录</button>
+            </form>
+        </div>
+</div>
+<!--footer-->
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="col-sm-offset-5 col-sm-5">
+        解释权归<a href="www.cenjp.cn">www.cenjp.cn</a>所有<br>
+    </div>
+    <div class="col-sm-offset-5 col-sm-5">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://www.miitbeian.gov.cn">许可证:KVW867</a>
+    </div>
+</div>
+</div>
+</body>
+<script>
+    function check() {
+        const code = $.cookie("code")
+        const validCode = $("#imageCode").val().toUpperCase();
+        if (code==validCode){
+            $("#loginForm").submit()
+        } else {
+            alert("请输入正确的验证码")
+            window.location.href="/Login"
+        }
+    }
+</script>
+</html>

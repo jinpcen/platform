@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.4/dist/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/Flat-UI-master/dist/css/flat-ui.min.css}"/>
+    <script type="text/javascript" th:src="@{/bootstrap-3.3.4/dist/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/Flat-UI-master/dist/js/flat-ui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/Flat-UI-master/dist/js/vendor/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <title></title>
+    <style>
+        .row {
+            margin-left: 20px;
+            margin-right: 20px;;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="Navbar::headerDiv"></div>
+<div class="row" style="height: 500px">
+    <div class="col-sm-offset-1 col-sm-5">
+        <br>
+        <br>
+        <img style= "width:353px;height: 487px;" th:src="'/getPicture?name='+${good.good_image}"
+             data-holder-rendered="true">
+    </div>
+    <div class="col-sm-5">
+        <br>
+        <br>
+        <br>
+        <div class="caption">
+            <h3 th:text="${good.good_name}" id="goodName"></h3>
+            <h3>商品详情</h3>
+            <p th:text="${good.good_introduction}"></p>
+        </div>
+        <form method="post" name="Spike">
+            <div class="caption">
+                <p th:text="'秒杀价格:'+${good.spike_price}" id="spikePrice"></p>
+                <p th:text="'秒杀数量'+${good.orinal_count}" id="orinal_count"></p>
+                <p th:text="'剩余数量'+${good.spike_count}" id="spike_count"></p>
+                <input type="hidden" id="startTime" th:value="${startTime}"/>
+                <input type="hidden" id="goodId" name="goodId" th:value="${good.good_id}"/>
+                <input type="hidden" id="spike_id" th:value="${good.spike_id}"/>
+                <input type="hidden" id="endTime" th:value="${endTime}"/>
+                <input type="hidden" id="count" th:value="${good.spike_count}"/>
+                <input type="hidden" id="miaoshaStatus" th:value="${miaoshaStatus}"/>
+                <span th:if="${miaoshaStatus eq 0}" id="Miaoshabefore">倒计时：<span id="countDown"></span></span>
+                <span th:if="${miaoshaStatus eq 1}" id="Miaoshaing">距结束：<span id="endDown"></span></span>
+                <span th:if="${miaoshaStatus eq 2}" id="Miaoshaend">秒杀已结束</span>
+                <text id="endTip"></text>
+                <br>
+                <p><a class="btn btn-primary" role="button" id="joinCar" href="#" onclick="JoinCar()">加入购物车</a></p>
+                <p><a class="btn btn-primary" role="button" id="buyButton" href="#" onclick="buyNow()">立即购买</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+<!--footer-->
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="col-sm-offset-5 col-sm-5">
+        解释权归<a href="www.cenjp.cn">www.cenjp.cn</a>所有<br>
+    </div>
+    <div class="col-sm-offset-5 col-sm-5">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://www.miitbeian.gov.cn">许可证:KVW867</a>
+    </div>
+</div>
+</body>
+<script>
+    $(document).ready(function(){
+        var count  = $("#count").val();
+        if(count<=0){
+            $("#miaoshaStatus").val(2);
+            $("#buyButton").attr("disabled", true);
+            $("#joinCar").attr("disabled", true);
+            alert("秒杀已结束")
+        }
+        else{
+            $("#now").val(new Date());
+            countDown();
+        }
+    });
+
+    function countDown() {
+        var miaoshaStatus = $("#miaoshaStatus").val();
+        var timeout;
+        var now = new Date();
+        var end = new Date($("#endTime").val());
+        var start = new Date($("#startTime").val());
+        var day;
+        var hour;
+        var minute;
+        var second;
+        var month;
+        if (miaoshaStatus == 0) {//秒杀还没开始，倒计时
+            $("#buyButton").attr("disabled", true);
+            $("#joinCar").attr("disabled", true);
+            timeout = setTimeout(function () {
+                if (now.getTime() == start.getTime())
+                    $("#miaoshaStatus").val(1);
+                now = new Date();
+                day = start.getUTCDate() - now.getUTCDate();
+                hour = start.getHours() - now.getHours();
+                minute = start.getMinutes() - now.getMinutes();
+                second = start.getSeconds() - now.getSeconds();
+                month = start.getMonth()-now.getMonth();
+
+                if (second < 0) {
+                    second = second + 60;
+                    minute = minute - 1;
+                }
+                if (minute < 0) {
+                    minute = minute + 60;
+                    hour = hour - 1;
+                }
+                if (hour < 0) {
+                    hour = hour + 24;
+                    day = day - 1;
+                }
+
+                if(day<0){
+                    day=day+30;
+                    month = month-1;
+                }
+                if (month < 0) {
+                    $("#miaoshaStatus").val(1);
+                }
+                $("#countDown").text("" + day + "天" + hour +
+                    "时" + minute + "分" +
+                    second + "秒");
+                countDown();
+            }, 100);
+        } else if (miaoshaStatus == 1) {//秒杀进行中
+            $("#buyButton").attr("disabled", false);
+            $("#joinCar").attr("disabled", false);
+            if (timeout) {
+                $("#Miaoshabefore").type("hidden");
+                clearTimeout(timeout);
+            }
+            timeout = setTimeout(function () {
+                $("#joinCar").attr("disabled", false);
+                now = new Date();
+                day = end.getUTCDate() - now.getUTCDate();
+                hour = end.getHours() - now.getHours();
+                minute = end.getMinutes() - now.getMinutes();
+                second = end.getSeconds() - now.getSeconds();
+                console.log(day + "t    " + hour + " h" + minute + "  m" + second)
+                if (second < 0) {
+                    second = second + 60;
+                    minute = minute - 1;
+                }
+                if (minute < 0) {
+                    minute = minute + 60;
+                    hour = hour - 1;
+                }
+                if (hour < 0) {
+                    hour = hour + 24;
+                    day = day - 1;
+                }
+                if (day < 0) {
+                    day = day+30;
+                    month = month-1;
+                }
+                if(month<0){
+                    $("#miaoshaStatus").val(2);
+                }
+                $("#endDown").text("" + day + "天" + hour +
+                    "时" + minute + "分" +
+                    second + "秒")
+                if (now.getTime() == end.getTime())
+                    $("#miaoshaStatus").val(2);
+                countDown();
+            }, 1000);
+        } else {//秒杀已经结束
+            if (timeout) {
+                $("#Miaoshaing").type("hidden");
+                clearTimeout(timeout);
+            }
+            $("#buyButton").attr("disabled", true);
+            $("#joinCar").attr("disabled", true);
+            $("#endTip").text("秒杀结束");
+        }
+    }
+
+    function JoinCar() {
+        var goodId = $("#goodId").val()
+        var goodName =  $("#goodName").text()
+        var spikeId = $("#spike_id").val()
+        var spikePrice = $("#spikePrice").text()
+        var startTime = $("#startTime").val()
+        var endTime = $("#endTime").val()
+        $.ajax({
+            url:"/joinCar",
+            type:"Post",
+            data:{
+                goodId:goodId,
+                goodName:goodName,
+                spikeId:spikeId,
+                spikePrice:spikePrice,
+                startTime:startTime,
+                endTime:endTime
+            },
+            success:function (data) {
+                if(data==1){
+                    layer.confirm("加入购物车成功！查看购物车？", {btn: ["确定", "取消"]},
+                        function () {
+                            window.location.href = "/getCar";
+                        },
+                        function () {
+                            $("#joinCar").attr("disabled", true);
+                        });
+                }else {
+                    $("#joinCar").attr("disabled", true);
+                    alert("已存在购物车！");
+                }
+            },error:function () {
+                alert("请求异常，请稍后再试！");
+            }
+        });
+
+    }
+
+    function buyNow() {
+        $.ajax({
+            url: "/doSpike",
+            type: "POST",
+            data: {
+                goodId: $("#goodId").val(),
+                spikeId: $("#spike_id").val()
+            },
+            success: function (data) {
+                if (data.code == 0) {
+                    getSpileResult($("#goodId").val(), $("#spike_id").val());
+                } else {
+                    $("#buyButton").attr("disabled", true);
+                    layer.msg(data.msg);
+                }
+            },
+            error: function () {
+                layer.msg("请求错误");
+            }
+        });
+    }
+
+    function getSpileResult(goodId, spikeId) {
+        g_showLoading();
+        $.ajax({
+            url: "/getResult",
+            type: "GET",
+            data: {
+                goodId: goodId,
+                spikeId: spikeId
+            },
+            success: function (data) {
+                if (data.code == -1) {
+                    var result = data.data;
+                    if (result < 0) {
+                        layer.msg("对不起，秒杀失败");
+                    }
+                } else if (data.code == 0) {//继续轮询
+                    setTimeout(function () {
+                        getSpileResult();
+                    }, 50);
+                } else {
+                    layer.confirm("恭喜你，秒杀成功！查看订单？", {btn: ["确定", "取消"]},
+                        function () {
+                            window.location.href = "/getOrderInfo?goodId=" + $("#goodId").val() + "&spikeId=" +  $("#spike_id").val();
+                        },
+                        function () {
+                            layer.closeAll();
+                        });
+                }
+            },
+            error: function () {
+                layer.msg("客户端请求有误");
+            }
+        });
+    }
+</script>
+</html>

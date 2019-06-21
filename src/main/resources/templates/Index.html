@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.4/dist/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/Flat-UI-master/dist/css/flat-ui.min.css}"/>
+    <script type="text/javascript" th:src="@{/bootstrap-3.3.4/dist/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/Flat-UI-master/dist/js/flat-ui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/Flat-UI-master/dist/js/vendor/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <title></title>
+    <style>
+       .row{
+           margin-top: 20px;;
+        }
+        .center{
+            text-align: center;
+        }
+        .pagination{
+            background: #cccccc;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="Navbar::headerDiv"></div>
+<div class="container">
+    <div class="jumbotron" style="background:url('/images/header.jpg')">
+        <h1>商品秒杀平台</h1>
+        <p></p>
+        <p><a class="btn btn-primary btn-lg" href="/getIntroduction" role="button">了解更多</a></p>
+    </div>
+
+    <ul class="nav nav-tabs" id="myTabs">
+        <li id="list1"><a href="/getList/1/1">手机数码</a></li>
+        <li id="list2"><a href="/getList/2/1">电脑办公</a></li>
+        <li id="list3"><a href="/getList/3/1">都市时尚</a></li>
+        <li id="list4"><a href="/getList/4/1">房产汽车</a></li>
+        <li id="list5"><a href="/getList/5/1">图书文娱</a></li>
+        <li id="list6"><a href="/getList/6/1">医药保健</a></li>
+        <li id="list7"><a href="/getList/7/1">酒水特产</a></li>
+    </ul>
+    <div>
+        <div class="row">
+            <div class="col-sm-3 col-md-3" th:each="goods,goodsStat:${list}">
+                <div class="thumbnail">
+                    <a th:href="'/gooddetail/'+${goods.good_id}">
+                        <img th:src="'/getPicture?name='+${goods.good_image}" style="width: 90%;height: 250px">
+                    </a>
+                    <div class="caption center">
+                        <h5 th:text="${goods.good_name}"></h5>
+                        <h6 th:text="'原价：'+${goods.good_originalPrice}"></h6>
+                        <h6 th:text="'秒杀价：'+${goods.spike_price}"></h6>
+                        <a class="btn btn-primary btn-block" role="button" th:href="'/gooddetail/'+${goods.good_id}" >查看详情</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <input type="hidden" id="active" th:value="${active}"/>
+            <input type="hidden" id="page" th:value="${pageIndex}"/>
+        </div>
+    </div>
+
+    <nav class="center">
+        <ul class="pagination  pagination-lg">
+            <li>
+                <a th:href="'/getList/'+${active}+'/1'" aria-label="Previous">
+                    <span aria-hidden="true">首页</span>
+                </a>
+            </li>
+
+            <li th:each="pagenumber,pagenumberStat:${navigatepageNums}"><a class="btn btn-success btn-block" th:href="'/getList/'+${active}+'/'+${pagenumberStat.count}"
+            th:id="'page'+${pagenumberStat.count}" th:text="${pagenumberStat.count}"></a>
+            </li>
+
+            <li>
+                <a th:href="'/getList/'+${active}+'/'+${nums}" aria-label="Next">
+                    <span aria-hidden="true">末页</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+<!--footer-->
+<div class="navbar navbar-default navbar-static-bottom">
+    <div class="col-sm-offset-5 col-sm-5">
+        解释权归<a href="www.cenjp.cn">www.cenjp.cn</a>所有<br>
+    </div>
+    <div class="col-sm-offset-5 col-sm-5">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://www.miitbeian.gov.cn">许可证:KVW867</a>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var active = $("#active").val()
+        var page = $("#page").val()
+        $("#list"+active).attr("class","active")
+        $("#page"+page).attr("class","active")
+    });
+</script>
+</html>

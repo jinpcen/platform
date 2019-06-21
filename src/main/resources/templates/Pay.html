@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.4/dist/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/Flat-UI-master/dist/css/flat-ui.min.css}"/>
+    <script type="text/javascript" th:src="@{/bootstrap-3.3.4/dist/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/Flat-UI-master/dist/js/flat-ui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/Flat-UI-master/dist/js/vendor/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <title></title>
+    <style>
+        .row{
+            margin-left: 20px;
+            margin-right: 20px;;
+        }
+        .row input{
+            width: 50px;
+        }
+        .list-group-item div:first-child:hover{
+
+            cursor: pointer;
+        }
+        th{
+            text-align: right;
+            width: 200px;;
+        }
+        td{
+            text-align: left;
+            padding: 10px;
+        }
+        .table th{
+            text-align: center;
+        }
+        .table td{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="Navbar::headerDiv"></div>
+<!--content-->
+<div class="container">
+    <div class="row thumbnail center col-sm-12">
+        <div class="col-sm-12">
+            <h3 class="text-center" style="margin-bottom: 30px">订单付款</h3>
+            <input type="hidden" id="goodId" th:value="${goodId}"/>
+            <input type="hidden" id="myspike_id" th:value="${myspike_id}"/>
+        </div>
+        <div class="col-sm-offset-4 col-sm-8">
+            <p>微信付款</p>
+            <img src="../images/wechat.jpg" width="40%">
+
+        </div>
+    </div>
+    <div></div>
+    <div class="col-sm-offset-4 col-sm-4" style="padding: 30px;">
+        <div class="col-sm-6 btn btn-success btn-block" onclick="doPay()">已付款</div>
+    </div>
+</div>
+<!--footer-->
+<div class="navbar navbar-default navbar-static-bottom">
+    <div class="col-sm-offset-5 col-sm-5">
+        解释权归<a href="www.cenjp.cn">www.cenjp.cn</a>所有<br>
+    </div>
+    <div class="col-sm-offset-5 col-sm-5">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://www.miitbeian.gov.cn">许可证:KVW867</a>
+    </div>
+</div>
+</body>
+<script>
+    function doPay() {
+         window.location.href="/doPay?myspike_id="+$("#myspike_id").val()+"&goodId="+$("#goodId").val();
+    }
+</script>
+</html>

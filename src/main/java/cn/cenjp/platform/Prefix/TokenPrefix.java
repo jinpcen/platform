@@ -1,0 +1,1 @@
+package cn.cenjp.platform.Prefix;public class TokenPrefix extends BasePrefix{    public TokenPrefix(int expireSeconds, String prefix) {        super(expireSeconds, prefix);    }    public static  TokenPrefix tokenPrefix=new TokenPrefix(60*60*24*3,"token");}

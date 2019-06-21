@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="../bootstrap-3.3.4/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../Flat-UI-master/dist/css/flat-ui.min.css"/>
+    <script src="../Flat-UI-master/dist/js/vendor/jquery.min.js"></script>
+    <script src="../bootstrap-3.3.4/dist/js/bootstrap.min.js"></script>
+    <script src="../Flat-UI-master/dist/js/flat-ui.min.js"></script>
+    <title></title>
+    <style>
+        .row{
+            margin-left: 20px;
+            margin-right: 20px;;
+        }
+    </style>
+</head>
+<body>
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">这什么东西</span>
+            </button>
+            <a class="navbar-brand" href="Index.html">商品秒杀平台</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="Index.html">首页</a></li>
+                <li><a href="Order.html">我的订单</a></li>
+                <li><a href="UserInfo.html">个人中心</a></li>
+                <li><a href="FriendLink.html">友情链接</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right hidden-sm">
+                <li><a href="Login.html">登录</a></li>
+                <li><a href="Register.html">注册</a></li>
+                <li>
+                    <a href="Cart.html"><span class="glyphicon glyphicon-shopping-cart">购物车</span></a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<!--content-->
+<div class="container">
+    <div class="row thumbnail">
+        <div class="col-sm-12">
+             <h1 class="text-center" style="margin-bottom: 30px">发布秒杀</h1>
+        </div>
+        <div class="col-sm-offset-3 col-sm-6" >
+            <form class="form-horizontal caption">
+                <div class="form-group">
+                    <label for="goodName" class="col-sm-3 control-label">商品名</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="goodName">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="goodIntroduction" class="col-sm-3 control-label">商品简介</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="goodIntroduction">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="goodOriginalPrice" class="col-sm-3 control-label">原价</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="goodOriginalPrice"  onblur="checkgoodOriginalPrice()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inlineRadio1" class="col-sm-3 control-label">商品种类</label>
+                    <div class="col-sm-8">
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">手机数码
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">电脑办公
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">都市时尚
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4">房产汽车
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio5" value="5">图书文娱
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio6" value="6">医药保健
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio7" value="7">酒水特产
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="spikePrice" class="col-sm-3 control-label">秒杀价格</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="spikePice" onblur="checkSpikePice()" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="spikeStartTime" class="col-sm-3 control-label">开始时间</label>
+                    <div class="col-sm-8">
+                        <input type="datetime-local" class="form-control" id="spikeStartTime" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="spikeEndTime" class="col-sm-3 control-label">结束时间</label>
+                    <div class="col-sm-8">
+                        <input type="datetime-local" class="form-control" id="spikeEndTime">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="spikeCount" class="col-sm-3 control-label">秒杀数量</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control"  id="spikeCount" onblur="checkSpikeCount()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-5">
+                        <button type="button" class="btn btn-success btn-block" onclick="send()">确定</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--footer-->
+<div class="navbar navbar-default navbar-static-bottom">
+    <div class="col-sm-offset-5 col-sm-5">
+        解释权归<a href="www.cenjp.cn">www.cenjp.cn</a>所有<br>
+    </div>
+    <div class="col-sm-offset-5 col-sm-5">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://www.miitbeian.gov.cn">许可证:KVW867</a>
+    </div>
+</div>
+</body>
+<script>
+    function checkgoodOriginalPrice(){
+        var pattern = /^[0-9]+(.[0-9]{0,3})?$/;
+        var goodOriginalPrice = $("#goodOriginalPrice").val()
+        if(!pattern.test(goodOriginalPrice)){
+            alert("商品原价必须为整数")
+            return false;
+        }
+
+    }
+
+    function checkSpikePice(){
+        var pattern = /^[0-9]+(.[0-9]{0,3})?$/;
+        var spikePice = $("#spikePice").val();
+        if(!pattern.test(spikePice)){
+            alert("秒杀价必须为整数")
+            return false;
+        }
+    }
+    function checkSpikeCount(){
+        var pattern = /^[0-9]+(.[0-9]{0,3})?$/;
+        var spikeCount = $("#spikeCount").val()
+        if(!pattern.test(spikeCount)){
+            alert("数量必须为整数")
+            return false;
+        }
+          
+    }
+
+    function send(){
+        var goodName= $("goodName").val()
+        var goodIntroduction= $("goodIntroduction").val()
+        var goodOriginalPrice= $("goodOriginalPrice").val()
+        var spikeStartTime= $("spikeStartTime").val()
+        var spikePrice= $("spikePrice").val()
+        var spikeEndTime= $("spikeEndTime").val()
+        var spikeCount= $("spikeCount").val()
+        var goodKind=$("input[type='radio']:checked").val()
+
+
+        alert(goodName+"    ")
+        alert(goodIntroduction+"    ")
+        alert(goodOriginalPrice+"    ")
+        alert(spikeStartTime+"    ")
+        alert(spikePrice+"    ")
+        alert(spikeEndTime+"    ")
+        alert(spikeCount+"    ")
+        alert(goodKind+"    ")
+    }
+</script>
+</html>

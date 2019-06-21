@@ -1,0 +1,204 @@
+﻿<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/font.css}">
+    <link rel="stylesheet" th:href="@{/css/xadmin.css}">
+    <link rel="stylesheet" th:href="@{/css/swiper.min.css}">
+    <script type="text/javascript" th:src="@{/js/jQuery.js}"></script>
+    <script type="text/javascript" th:src="@{/js/swiper.jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/layui/layui.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/js/xadmin.js}"></script>
+</head>
+<body>
+    <!-- 顶部开始 -->
+    <div th:replace="admin/adminHeader::Header"></div>
+    <!-- 顶部结束 -->
+    <!-- 中部开始 -->
+    <div class="wrapper">
+        <!-- 左侧菜单开始 -->
+        <div th:replace="admin/adminLeft::left"></div>
+        <!-- 左侧菜单结束 -->
+        <!-- 右侧主体开始 -->
+        <div class="page-content">
+          <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <div class="layui-form xbs">
+                <div class="layui-form-pane" style="text-align: center;">
+                  <div class="layui-form-item" style="display: inline-block;">
+                    <div class="layui-input-inline">
+                      <input type="text" name="username"  placeholder="请输入手机号码" id="tel" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-input-inline" style="width:80px">
+                        <button class="layui-btn" onclick="getUser()" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+                    </div>
+                  </div>
+                </div> 
+            </div>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>用户名 </th>
+                        <th>性别</th>
+                        <th>手机</th>
+                        <th> 邮箱</th>
+                        <th>地址</th>
+                        <th>是否是会员</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="id"></td>
+                        <td id="username"></td>
+                        <td id="sex"></td>
+                        <td id="phone" ></td>
+                        <td id="mail"></td>
+                        <td id="address"></td>
+                        <td class="td-status" id="ifVIP"></td>
+                        <td class="td-manage" id="operation">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 右侧内容框架，更改从这里结束 -->
+           <input id="statusCode" type="hidden"/>
+          </div>
+        </div>
+        <!-- 右侧主体结束 -->
+    </div>
+    <!-- 中部结束 -->
+    <!-- 底部开始 -->
+    <!-- 底部结束 -->
+    <!-- 背景切换开始 -->
+    <div class="bg-changer">
+        <div class="swiper-container changer-list">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img class="item" src="images/a.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/b.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/c.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/d.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/e.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/f.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/g.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/h.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/i.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/j.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="images/k.jpg" alt=""></div>
+                <div class="swiper-slide"><span class="reset">初始化</span></div>
+            </div>
+        </div>
+        <div class="bg-out"></div>
+        <div id="changer-set"><i class="iconfont">&#xe696;</i></div>   
+    </div>
+    <!-- 背景切换结束 -->
+    <!-- 页面动态效果 -->
+    <script>
+        function getUser() {
+            var phone=$("#tel").val();
+            $.ajax({
+                url: "/getUserDel",
+                type: "POST",
+                data: {
+                    phone: phone
+                },
+                success: function (data) {
+                    if (data.code === 500214)
+                        alert("该手机号码不存在");
+                    else {
+                        $("#id").text(data.user.user_id);
+                        $("#username").text(data.user.user_name);
+                        $("#sex").text(data.user.user_sex);
+                        $("#phone").text(data.user.user_phone);
+                        $("#address").text(data.user.user_addr);
+                        $("#mail").text(data.user.user_email);
+                        if(data.status==1){
+                            $("#ifVIP").html(" <span class='layui-btn layui-btn-mini'>是</span>");
+                            $("#operation").html(" <a style=\"text-decoration:none\" class='layui-btn layui-btn-normal layui-btn-mini' onclick=\"member_recover()\" title=\"添加会员权限\">\n" +
+                                "                                <i class=\"layui-icon\">&#xe618;</i>\n" +
+                                "                            </a>\n" +
+                                "                            <a title=\"删除会员权限\" onclick=\"member_unset()\"\n" +
+                                "                            style=\"text-decoration:none\">\n" +
+                                "                                <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                "                            </a>");
+                            $("#statusCode").val(1)
+                        }else{
+                            $("#ifVIP").html(" <span class='layui-btn  layui-btn-mini layui-btn-danger'>否</span>");
+                            $("#operation").html(" <a style=\"text-decoration:none\" onclick=\"member_recover()\"  class='layui-btn layui-btn-normal layui-btn-mini' title=\"添加会员权限\">\n" +
+                                "                                <i class=\"layui-icon\">&#xe618;</i>\n" +
+                                "                            </a>\n" +
+                                "                            <a title=\"删除会员权限\" class='layui-btn layui-btn-danger' onclick=\"member_unset()\"\n" +
+                                "                            style=\"text-decoration:none\">\n" +
+                                "                                <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                "                            </a>");
+                            $("#statusCode").val(0)
+                        }
+                    }
+
+                },
+                error: function (data) {
+                    alert("服务器异常，请稍后再试");
+                }
+            }
+            );
+        }
+
+        function member_recover(){
+            if($("#statusCode").val()==1) {
+                alert("已是会员，无需操作");
+            }
+            else{
+                $.ajax({
+                    url:"/RoleLive",
+                    type:"POST",
+                    data:{
+                        userId:$("#id").text()
+                    },
+                    success:function (data) {
+                        if(data==1){
+                            alert("添加成功");
+                            $("#ifVIP").html(" <span class='layui-btn  layui-btn-mini'>是</span>");
+                            $("#statusCode").val(1);
+                        }else{
+                            alert("添加失败，请稍后再试");
+                        }
+                    },
+                    error:function (data) {
+                        alert("服务器异常，请稍后再试");
+                    }
+                });
+            }
+        }
+
+        function member_unset(){
+            if($("#statusCode").val()==0) {
+                alert("未是会员，无需操作");
+            }
+            else{
+                $.ajax({
+                    url:"/RoleStop",
+                    type:"POST",
+                    data:{
+                        userId:$("#id").text()
+                    },
+                    success:function (data) {
+                        if(data==1){
+                            alert("删除会员成功");
+                            $("#ifVIP").html(" <span class='layui-btn  layui-btn-mini layui-btn-danger'>否</span>")
+                            $("#statusCode").val(0);
+                        }else{
+                            alert("删除会员失败");
+                        }
+                    },
+                    error:function (data) {
+                        alert("服务器异常，请稍后再试");
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
