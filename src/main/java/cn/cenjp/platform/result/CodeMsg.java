@@ -24,6 +24,7 @@ public class CodeMsg {
 	
 	//商品模块 5003XX
 	public static CodeMsg GOOD_NOT_EXIST = new CodeMsg(5003001, "不存在该商品信息");
+	public static CodeMsg GOOD_NO_MORE = new CodeMsg(5003002, "不存在更多商品");
 	//订单模块 5004XX
 
 	//秒杀模块 5005XX
