@@ -41,8 +41,9 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        cn.cenjp.platform.bean.User user=null;
+        cn.cenjp.platform.bean.User user = null;
 
+        System.out.println(phone);
         //读取用户数据
         user = userDao.selectByUserPhone(phone);
         //判断用户是否存在，则不存在则抛出用户不存在异常
