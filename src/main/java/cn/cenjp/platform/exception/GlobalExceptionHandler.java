@@ -35,7 +35,9 @@ public class GlobalExceptionHandler {
 			return Result.error(CodeMsg.Access_Deny);
 		}else if(e instanceof InternalAuthenticationServiceException){
 			return Result.error(CodeMsg.MOBILE_NOT_EXIST);
-		} else {
+		}else if (e instanceof  InternalAuthenticationServiceException){
+			return Result.error(CodeMsg.MOBILE_NOT_EXIST);
+		}else {
 			return Result.error(CodeMsg.SERVER_ERROR);
 		}
 	}
