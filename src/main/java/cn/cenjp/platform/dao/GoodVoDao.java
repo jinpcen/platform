@@ -31,4 +31,11 @@ public interface GoodVoDao {
             "on g.good_id=sg.good_id\n" +
             "where g.good_id=#{id}")
     GoodVo getGood(String id);
+
+
+    @Select("SELECT count(spike_goods.spike_id)\n" +
+            "from spike_goods left join goods\n" +
+            "on goods.good_id=spike_goods.good_id\n" +
+            "where goods.good_kind=#{goodKind}")
+    long countGood(@Param("goodKind") String goodKind);
 }
