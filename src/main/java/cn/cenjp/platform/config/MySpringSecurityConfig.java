@@ -83,5 +83,6 @@ public class MySpringSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().mvcMatchers("/doRegister");
         web.ignoring().mvcMatchers("/noAccess");
         web.ignoring().mvcMatchers("/getImage");
+        web.ignoring().mvcMatchers("/Android/**");
     }
 }
